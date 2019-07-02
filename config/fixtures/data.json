@@ -1,0 +1,1 @@
+[{"model": "website.drug", "pk": 1, "fields": {"name": "advil", "dosage": 10}}, {"model": "website.vitamin", "pk": 1, "fields": {"name": "vitamin A", "description": "idk what this does!", "link": "https://www.google.com", "drugs": [1]}}, {"model": "website.food", "pk": 1, "fields": {"name": "water", "description": "the simplest supplement there is!", "drugs": [1]}}]
