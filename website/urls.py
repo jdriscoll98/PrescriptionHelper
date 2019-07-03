@@ -9,4 +9,5 @@ app_name = 'website'
 urlpatterns = [
     	# General Page Views
 		url(r'^$', HomePageView.as_view(), name='homepage'),
+		url(r'^results/$', ReturnSupplements.as_view(), name='return_supplements'),
 ]

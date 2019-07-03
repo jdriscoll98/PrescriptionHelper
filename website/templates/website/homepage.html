@@ -1,14 +1,13 @@
 {% extends 'website/base.html' %}
 
 
-{% block custom_css %}
-{% endblock custom_css %}
-
 {% block content %}
 {% include 'website/server_messages.html' %}
 <div class="container">
     <div class="row">
         <div class="col text-center">
+            <h1>Prescription Supplement Helper</h1>
+                {% csrf_token %}
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -16,20 +15,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <strong>Name of Medication:</strong>
-                                    </td>
-                                    <td>
-                                        <input name="medication"</input>
-                                    </tr>
+                                   {{ form.as_table }}
+
                                     <tr>
                                         <td colspan="2">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="submit btn btn-primary">Submit</button>
                                         </td>
+                                        </tr>
                         </tbody>
 </table><br /><br />
-<table class="table table-striped table-bordered">
+<table id="results" class="table table-striped table-bordered results">
     <thead>
         <tr>
             <th colspan="4">Supplement Data</th>
@@ -41,11 +36,11 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>
+                    <td id="viatimin">
                         Lorem ipsum dolor sit amet, nisl tritani utroque vix ei, usu error mundi sensibus eu. Mel eleifend partiendo assueverit ut, ex duo veniam instructior. Dolore scribentur eum et, cibo civibus voluptaria ut eam, fastidii accumsan eu per. Velit movet corrumpit ne cum, dictas theophrastus ex eos. At his vidisse aliquip
                         </td>
 
-                        <td>
+                        <td id="food">
 Ut mel eripuit ornatus adolescens. Brute partem dissentias has et. Sit aperiri admodum vulputate ex, ne modo habemus evertitur usu, blandit adipiscing ad cum. Sea dolor equidem dissentiet no, audire dolorum admodum ius te, viris iudico ei eum. Audiam iriure iracundia in vel, summo minimum ut mel.
                         </td>
                 </tr>
@@ -66,7 +61,26 @@ Ut mel eripuit ornatus adolescens. Brute partem dissentias has et. Sit aperiri a
 {% block js %}
 <script>
 //------------------------------------------------------
-
+$('.submit').on('click', function() {
+    let name = document.getElementById('id_name_of_medication').value;
+    $.ajax({
+        url: '{% url "website:return_supplements" %}',
+        type: 'POST',
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            name: name
+        },
+        dataType: 'json',
+        traditional: 'True',
+        success: function (data) {
+            if (data.success) {
+                document.getElementById('viatimin').innerHTML = data['vitamin'];
+                document.getElementById('food').innerHTML = data['food'];
+                document.getElementById('results').style.visibility = 'visible';
+            }
+        }
+    })
+});
 //------------------------------------------------------
 </script>
 {% endblock js %}
