@@ -18,7 +18,8 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = {
-            'form': PrescriptionForm
+            'form': PrescriptionForm,
+            'list_of_drugs': Drug.objects.all()
         }
         return context
 
