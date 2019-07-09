@@ -79,6 +79,9 @@ $('.submit').on('click', function() {
                 document.getElementById('food').innerHTML = data['food'];
                 document.getElementById('results').style.visibility = 'visible';
             }
+            else {
+                location.reload();
+            }
         }
     })
 });
